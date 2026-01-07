@@ -1,0 +1,10 @@
+git checkout -b feature/ui-fix
+git commit -am "UI fix"
+git checkout main
+git merge feature/ui-fix
+git branch                 # list branches
+git branch branch-name     # create branch
+git checkout branch-name   # switch branch
+git checkout -b new-branch # create + switch
+git merge branch-name      # merge branch
+git branch -d branch-name  # delete branch
