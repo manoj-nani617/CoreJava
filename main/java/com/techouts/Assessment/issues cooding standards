@@ -1,7 +1,0 @@
-Class name not in PascalCase
-Public field (violates encapsulation)
-Method names not descriptive
-finalize() usage (deprecated, discouraged)
-No validation or immutability
-Magic logic inside method
-Missing access modifiers consistency
