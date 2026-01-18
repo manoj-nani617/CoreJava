@@ -19,9 +19,11 @@ class Consumer implements Runnable {
         this.obj = obj;
     }
     public void run() {
+        System.out.println("hello world");
         while(true) {
             try{ obj.consume();}catch(Exception e) {}
         }
+
     }
 
 }
