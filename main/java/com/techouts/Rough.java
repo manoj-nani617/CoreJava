@@ -1,70 +1,44 @@
 package com.techouts;
-import java.io.IOException;
-class Producer implements Runnable {
-    Rough obj;
-    Producer(Rough obj) {
-        this.obj = obj;
-    }
 
-    public void run() {
-        while (true) {
-            try {obj.produce(obj.num++);} catch (Exception e) {}
-            System.out.println("It is "+obj.num);
-        }
+class Engine {
+    void method() {
+        System.out.println("Engine Started");
     }
 }
-class Consumer implements Runnable {
-    Rough obj;
-    Consumer(Rough obj) {
-        this.obj = obj;
+class Bike {
+    void mehtod() {
+        System.out.println("This is a Bike");
     }
-    public void run() {
-        while(true) {
-            try{ obj.consume();}catch(Exception e) {}
-        }
-
-    }
-
 }
+class B{
+    B() {
+        System.out.println("This is the B constructor");
+    }
+    void method() {
+        System.out.println("This is the B class method");
+    }
+}
+class Car {
+    B classb;                                       //Association
+    Engine e ;
+    Bike b;
+    Car(Bike b) {                                   // Aggregation Car is not controlling Bike both are independent objects
+        e = new Engine();                    // Car is controlling Engine when car is destroyed engine also destroyed both depending one another
+        this.b = b;
+    }
+    void drive() {
+        e.method();
+        System.out.println("You can drive()");
+    }
+}
+
 public class Rough {
-    int num = 0;
-    boolean setValue = false;
-    public static void main(String[] args)throws IOException {
-        Rough obj = new Rough();
-        Thread t1 = new Thread(new Producer(obj));
-        Thread t2 = new Thread(new Consumer(obj));
-        t1.start();
-        t2.start();
+    public static void main(String[] args) {
+        Bike b = new Bike();
+        Car c = new Car(b);
+        c.drive();
+
+
 
     }
-    void produce(int num)throws InterruptedException {
-        this.num = num;
-       synchronized (this) {
-           while(setValue) {
-               try { wait();}catch (Exception e) {
-                   System.out.println(e.getMessage());
-               };
-           }
-           System.out.println();
-           System.out.println("Produced"+this.num);
-           setValue = true;
-           notifyAll();
-       }
-        Thread.sleep(1000);
-
-    }
-    void consume()throws  InterruptedException {
-        synchronized (this) {
-            while(!setValue) {
-                try { wait();}catch (Exception e) {System.out.println(e.getMessage());};
-
-            }
-            System.out.println("Consumed"+num);
-            setValue = false;
-            notifyAll();
-        }
-        Thread.sleep(1000);
-
-    }
-
 }
