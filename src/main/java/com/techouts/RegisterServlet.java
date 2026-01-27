@@ -9,9 +9,15 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class RegisterServlet extends HttpServlet{
 	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException{
-		String msg = (String)req.getAttribute("msg");
-		PrintWriter out = res.getWriter();
-		out.println(msg);
+		String username = (String)req.getParameter("username");
+		String email = (String)req.getParameter("email");
+		String password = (String)req.getParameter("password");
+		String confirmPassword = (String)req.getParameter("confirmPassword");
+		res.getWriter().println(username+"\n");
+		res.getWriter().println(email+"\n");
+		res.getWriter().println(password+"\n");
+		res.getWriter().println(confirmPassword+"\n");
+		
 		
 	}
 	
