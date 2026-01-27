@@ -1,10 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-<<<<<<< HEAD
-	<name>jii</name>
-=======
-	<name>LoginPage</name>
->>>>>>> 685ed896ac13807482dc20a1f6670e8254889225
+	<name>EcommerceWebAppUsingHTMLAndServlets</name>
 	<comment></comment>
 	<projects>
 	</projects>
