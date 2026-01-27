@@ -2,6 +2,11 @@ package com.techouts;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.Statement;
 
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
@@ -13,10 +18,20 @@ public class RegisterServlet extends HttpServlet{
 		String email = (String)req.getParameter("email");
 		String password = (String)req.getParameter("password");
 		String confirmPassword = (String)req.getParameter("confirmPassword");
-		res.getWriter().println(username+"\n");
-		res.getWriter().println(email+"\n");
-		res.getWriter().println(password+"\n");
-		res.getWriter().println(confirmPassword+"\n");
+		try(Connection con = DriverManager.getConnection("jdbc:postgresql://localhost5432/Employee","postgres","manojkasu")) {
+			
+			PreparedStatement st = con.prepareStatement("insert into empdetails values(?,??)");
+			st.setString(1, username);
+			st.setString(2, email);
+			st.setString(3, password);
+			
+			
+			
+		}
+		catch(SQLException e) {
+			res.getWriter().println(e.getMessage());
+		}
+		
 		
 		
 	}

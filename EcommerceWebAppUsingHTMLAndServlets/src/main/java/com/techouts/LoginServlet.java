@@ -23,7 +23,8 @@ public class LoginServlet extends HttpServlet {
 			Class.forName("org.postgresql.Driver");
 			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Employee", "postgres",
 					"manojkasu");
-			PreparedStatement ps = con.prepareStatement("select count(*) from UserDetails where username = ? and password = ?");
+			res.getWriter().println("Connected");
+			PreparedStatement ps = con.prepareStatement("select count(*) from empdetails where username = ? and userpasword = ?");
 			ps.setString(1, username);
 			ps.setString(2, password);;
 			int count = 0;
