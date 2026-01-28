@@ -15,16 +15,19 @@ import jakarta.servlet.http.HttpServletResponse;
 
 public class LoginServlet extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse res) throws IOException {
-		String username = (String) req.getParameter("username");
-		String password  = (String) req.getParameter("password");
-		res.getWriter().println(username +""+password);
+		String username = (String) req.getParameter("email");
+		String password  = (String) req.getParameter("password");s
 		try {
 			// load and register
 			Class.forName("org.postgresql.Driver");
 			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Employee", "postgres",
 					"manojkasu");
-			res.getWriter().println("Connected");
-			PreparedStatement ps = con.prepareStatement("select count(*) from empdetails where username = ? and userpasword = ?");
+			Statement st = con.createStatement();
+			ResultSet rs = st.executeQuery("select * from empdetails");
+			while(rs.next()) {
+				res.getWriter().println(rs.getInt(1) +"\t"+rs.getString(2)+"\t"+rs.getString(3));
+			}
+			PreparedStatement ps = con.prepareStatement("select count(*) from empdetails where email = ? and password = ?");
 			ps.setString(1, username);
 			ps.setString(2, password);;
 			int count = 0;
@@ -33,7 +36,6 @@ public class LoginServlet extends HttpServlet {
 				count = rs2.getInt(1);
 			}
 			if(count > 0) res.sendRedirect("AutoDelay.html");
-			else res.sendRedirect("LoginFailure.html");
 		} catch (SQLException | ClassNotFoundException cne) {
 			cne.printStackTrace();
 			System.out.println(cne.getMessage());

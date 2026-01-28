@@ -9,12 +9,12 @@
 
 <div class="login-container">
     <h2>Login</h2>
-    <form method="post" action="Login">
+    <form method="post" action="Login" onsubmit="submitForm()">
         <label for="username">Email:</label>
-        <input type="text" id="username" name="username" >
+        <input type="text" id="username" name="email" id = "email" >
 
         <label for="password">Password:</label>
-        <input type="password" id="password" name="password" >
+        <input type="password" id="password" name="password" id = "pass">
 
         <input type="submit" value="Login">
         <p>Have you not registered? <a href = "Register.html">Register</a>

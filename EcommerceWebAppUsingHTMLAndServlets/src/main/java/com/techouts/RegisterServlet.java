@@ -19,10 +19,6 @@ public class RegisterServlet extends HttpServlet{
 		String email = (String)req.getParameter("email");
 		String password = (String)req.getParameter("password");
 		String confirmPassword = (String)req.getParameter("confirmPassword");
-		res.getWriter().println(username);
-		res.getWriter().println(email);
-		res.getWriter().println(password);
-		res.getWriter().println(confirmPassword);
 		
 		try {
 			Class.forName("org.postgresql.Driver");
@@ -33,18 +29,16 @@ public class RegisterServlet extends HttpServlet{
 			ResultSet rs = st.executeQuery();
 			while(rs.next()) {
 				count = rs.getInt(1);
+				count++;
 			}
-			if(count > 0) res.getWriter().println("No. of Users Exist "+count);
-			else res.getWriter().println("No. Of Users Exist "+count);
 			count++;
-			PreparedStatement st1 = con.prepareStatement("insert into empdetails values(?,?,?)");
+			PreparedStatement st1 = con.prepareStatement("insert into empdetails values(?,?,?,?)");
 			st1.setInt(1, count);
-			st1.setString(1, username);
-			st1.setString(2, email);
-			st1.setString(3, password);
+			st1.setString(2, username);
+			st1.setString(3, email);
+			st1.setString(4, password);
 			int rowsAffected = st1.executeUpdate();
-			res.getWriter().println("Rows Affected "+rowsAffected);
-			
+			res.sendRedirect("AutoDelay.html");
 			
 			
 		}

@@ -20,5 +20,26 @@
 <url-pattern>/Register</url-pattern>
 </servlet-mapping>
 
+<servlet>
+<servlet-name>RoughServlet</servlet-name>
+<servlet-class>com.techouts.RoughServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>RoughServlet</servlet-name>
+<url-pattern>/rough</url-pattern>
+</servlet-mapping>
+
+
+<servlet>
+<servlet-name>AnotherRoughServlet</servlet-name>
+<servlet-class>com.techouts.AnotherRoughServlet</servlet-class>
+</servlet>
+
+<servlet-mapping>
+<servlet-name>AnotherRoughServlet</servlet-name>
+<url-pattern>/roughServlet</url-pattern>
+</servlet-mapping>
+
 
 </web-app>
