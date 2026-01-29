@@ -16,7 +16,7 @@ import jakarta.servlet.http.HttpServletResponse;
 public class LoginServlet extends HttpServlet {
 	protected void service(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		String username = (String) req.getParameter("email");
-		String password  = (String) req.getParameter("password");s
+		String password  = (String) req.getParameter("password");
 		try {
 			// load and register
 			Class.forName("org.postgresql.Driver");
@@ -36,6 +36,7 @@ public class LoginServlet extends HttpServlet {
 				count = rs2.getInt(1);
 			}
 			if(count > 0) res.sendRedirect("AutoDelay.html");
+			else res.sendRedirect("LoginFailure.html");
 		} catch (SQLException | ClassNotFoundException cne) {
 			cne.printStackTrace();
 			System.out.println(cne.getMessage());
