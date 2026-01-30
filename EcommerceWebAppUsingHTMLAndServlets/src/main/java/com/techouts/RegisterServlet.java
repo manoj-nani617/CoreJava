@@ -12,7 +12,12 @@ import java.sql.Statement;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-
+import jakarta.servlet.http.HttpSession;
+class UserExist extends Exception {
+	UserExist(String message) {
+		super(message);
+	}
+}
 public class RegisterServlet extends HttpServlet{
 	public void service(HttpServletRequest req, HttpServletResponse res) throws IOException{
 		String username = (String)req.getParameter("username");
@@ -24,20 +29,33 @@ public class RegisterServlet extends HttpServlet{
 			Class.forName("org.postgresql.Driver");
 			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Employee","postgres","manojkasu");
 			res.getWriter().println("Connection Successful");
-			PreparedStatement st = con.prepareStatement("select count(*) from empdetails");
-			int count = 0;
-			ResultSet rs = st.executeQuery();
-			while(rs.next()) {
-				count = rs.getInt(1);
-				count++;
+			PreparedStatement st2 = con.prepareStatement("select count(*) from empdetails where email = ?");
+			st2.setString(1, email);
+			ResultSet rs2 = st2.executeQuery();
+			res.getWriter().println("Comming Here");
+			int num = 0;
+			while(rs2.next()) {
+				num = rs2.getInt(1);
 			}
-			count++;
-			PreparedStatement st1 = con.prepareStatement("insert into empdetails values(?,?,?,?)");
-			st1.setInt(1, count);
+			if(num > 0) {
+				try {
+					res.getWriter().println("Entering into the User Exception");
+					throw new UserExist("User Exist Exception Occur");
+				}
+				catch(UserExist e) {
+					System.out.println(e.getMessage());
+				}
+			}
+			
+			num++;
+			PreparedStatement st1 = con.prepareStatement("insert into empdetails('username','email','password') values(?,?,?)");
+			st1.setInt(1, num);
 			st1.setString(2, username);
 			st1.setString(3, email);
 			st1.setString(4, password);
 			int rowsAffected = st1.executeUpdate();
+			HttpSession session = req.getSession();
+			session.setAttribute("email", email);
 			res.sendRedirect("AutoDelay.html");
 			
 			
