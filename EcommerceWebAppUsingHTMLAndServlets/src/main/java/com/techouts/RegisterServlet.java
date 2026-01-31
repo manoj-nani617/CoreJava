@@ -31,8 +31,7 @@ public class RegisterServlet extends HttpServlet{
 			res.getWriter().println("Connection Successful");
 			PreparedStatement st2 = con.prepareStatement("select count(*) from empdetails where email = ?");
 			st2.setString(1, email);
-			ResultSet rs2 = st2.executeQuery();
-			res.getWriter().println("Comming Here");
+			ResultSet rs2 = st2.executeQuery(); 
 			int num = 0;
 			while(rs2.next()) {
 				num = rs2.getInt(1);
@@ -49,7 +48,6 @@ public class RegisterServlet extends HttpServlet{
 			
 			num++;
 			PreparedStatement st1 = con.prepareStatement("insert into empdetails('username','email','password') values(?,?,?)");
-			st1.setInt(1, num);
 			st1.setString(2, username);
 			st1.setString(3, email);
 			st1.setString(4, password);
