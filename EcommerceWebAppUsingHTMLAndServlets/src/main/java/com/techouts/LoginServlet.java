@@ -20,23 +20,13 @@ import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 
 public class LoginServlet extends HttpServlet {
-	DataSource ds;
-	public void init(){
-		try {
-			Context ctx = new InitialContext();
-			ds = (DataSource) ctx.lookup("java:comp/env/jdbc/mydb");
-		}
-		catch (NamingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-	}
+
 	protected void doPost(HttpServletRequest req, HttpServletResponse res) throws IOException {
 		String username = (String) req.getParameter("email");
 		String password  = (String) req.getParameter("password");
-		try {			
-			Connection con = ds.getConnection();
+		try {
+			Class.forName("org.postgresql.Driver");
+			Connection  con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/EcommerceWebApp","postgres","manojkasu");
 			System.out.println("Connection Success");
 			PreparedStatement ps = con.prepareStatement("select count(*) from empdetails where email = ? and password = ?");
 			ps.setString(1, username);
@@ -54,14 +44,14 @@ public class LoginServlet extends HttpServlet {
 
 			
 			}
-//			else res.sendRedirect("LoginFailure.html");
+			else res.sendRedirect("LoginFailure.html");
 //			else res.sendRedirect("Login.html");
 			rs2.close();
 			ps.close();
 			con.close();
-		} catch (SQLException cne) {
-			cne.printStackTrace();
-			System.out.println(cne.getMessage());
+		} catch (SQLException | ClassNotFoundException e) {
+			e.printStackTrace();
+			System.out.println(e.getMessage());
 		}
 
 		

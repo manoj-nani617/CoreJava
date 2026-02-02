@@ -4,7 +4,7 @@
 		type = "javax.sql.DataSource"
 		auth = "Conainer"
 		driverClassName = "org.postgresql.Driver"
-		url = "jdbc:postgresql://localhost:5432/Employee"
+		url = "jdbc:postgresql://localhost:5432/Hello"
 		username = "postgres"
 		password = "manojkasu"
 	/>

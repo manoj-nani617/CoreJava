@@ -27,30 +27,34 @@ public class RegisterServlet extends HttpServlet{
 		
 		try {
 			Class.forName("org.postgresql.Driver");
-			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/Employee","postgres","manojkasu");
+			Connection con = DriverManager.getConnection("jdbc:postgresql://localhost:5432/EcommerceWebApp","postgres","manojkasu");
 			res.getWriter().println("Connection Successful");
-			PreparedStatement st2 = con.prepareStatement("select count(*) from empdetails where email = ?");
-			st2.setString(1, email);
-			ResultSet rs2 = st2.executeQuery(); 
-			int num = 0;
-			while(rs2.next()) {
-				num = rs2.getInt(1);
-			}
-			if(num > 0) {
-				try {
-					res.getWriter().println("Entering into the User Exception");
-					throw new UserExist("User Exist Exception Occur");
+			try {
+				PreparedStatement st2 = con.prepareStatement("select count(*) from empdetails where email = ?");
+				st2.setString(1, email);
+				ResultSet rs2 = st2.executeQuery(); 
+				int num = 0;
+				while(rs2.next()) {
+					num = rs2.getInt(1);
 				}
-				catch(UserExist e) {
-					System.out.println(e.getMessage());
+				if(num > 0) {
+					try {
+						res.getWriter().println("Entering into the User Exception");
+						throw new UserExist("User Exist Exception Occur");
+					}
+					catch(UserExist e) {
+						System.out.println(e.getMessage());
+					}
 				}
 			}
-			
-			num++;
-			PreparedStatement st1 = con.prepareStatement("insert into empdetails('username','email','password') values(?,?,?)");
-			st1.setString(2, username);
-			st1.setString(3, email);
-			st1.setString(4, password);
+			catch(Exception e) {
+				System.out.println("Exception Occurs");
+			}
+		
+			PreparedStatement st1 = con.prepareStatement("insert into empdetails(username,email,password) values(?,?,?)");
+			st1.setString(1, username);
+			st1.setString(2, email);
+			st1.setString(3, password);
 			int rowsAffected = st1.executeUpdate();
 			HttpSession session = req.getSession();
 			session.setAttribute("email", email);
