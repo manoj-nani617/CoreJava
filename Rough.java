@@ -32,9 +32,9 @@ class r1 implements Runnable {
 public class Rough {
     public static void main(String[] args)throws InterruptedException {
         Work w = new Work();
-        Thread t = new Thread(r1);
-        Thread t1 = new Thread(r2);
-        Thread t2 = new Thread(r3);
+        Thread t = new Thread(new r1(w));
+        Thread t1 = new Thread(new r2(w));
+        Thread t2 = new Thread(new r3(w));
         System.out.println(t.getState());
         t.start();
         System.out.println(t.getState());
