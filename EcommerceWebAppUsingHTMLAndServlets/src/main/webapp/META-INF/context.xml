@@ -1,0 +1,11 @@
+<Context>
+	<Resource 
+		name = "jdbc/mydb"
+		type = "javax.sql.DataSource"
+		auth = "Conainer"
+		driverClassName = "org.postgresql.Driver"
+		url = "jdbc:postgresql://localhost:5432/Hello"
+		username = "postgres"
+		password = "manojkasu"
+	/>
+</Context>
