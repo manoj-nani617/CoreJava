@@ -4,8 +4,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 
 @Entity
-public class Employee
-{
+public class Employee {
     @Id
     private int id;
     private String name;
@@ -20,13 +19,14 @@ public class Employee
         this.tech = tech;
     }
 
-    public int getId() {
+
+    int getId() {
         return id;
     }
-    public String getName() {
+    String getName()  {
         return name;
     }
-    public String getTech() {
+    String getTech() {
         return tech;
     }
 }
