@@ -1,7 +1,27 @@
 package com.techouts;
+
+import jakarta.persistence.criteria.CriteriaBuilder;
+
 class Work {
-    void function() {
-        System.out.println("This is a function");
+    synchronized void method() {
+        try {
+            System.out.println(Thread.currentThread().getName());
+            wait();
+        }
+        catch (InterruptedException ie) {
+            System.out.println(ie.getMessage());
+        }
+        notifyAll();
+    }
+    synchronized void method2() {
+        try {
+            System.out.println(Thread.currentThread().getName());
+            wait();
+        }
+        catch (InterruptedException ie) {
+            System.out.println(ie.getMessage());
+        }
+        notifyAll();
     }
 }
 class r1 implements Runnable {
@@ -9,38 +29,33 @@ class r1 implements Runnable {
     r1(Work w) {
         this.w = w;
     }
+
     public void run() {
+        w.method2();
+        }
 
     }
-}class r2 implements Runnable {
+class r2 implements Runnable {
     Work w;
     r2(Work w) {
         this.w = w;
     }
-    public void run() {
 
-    }
-}class r3 implements Runnable {
-    Work w;
-    r3(Work w) {
-        this.w = w;
-    }
     public void run() {
+        w.method();
 
     }
 }
 public class Rough {
     public static void main(String[] args)throws InterruptedException {
-        Work w = new Work();
+        ;Work w = new Work();
         Thread t = new Thread(new r1(w));
         Thread t1 = new Thread(new r2(w));
-        Thread t2 = new Thread(new r3(w));
-        System.out.println(t.getState());
         t.start();
+        t1.start();
+        Thread.sleep(3000);
         System.out.println(t.getState());
-        Thread.sleep(2000);
-        System.out.println(t.getState());
-        t.join();
-        System.out.println(t.getState());
+        System.out.println(t1.getState());
+
     }
 }
